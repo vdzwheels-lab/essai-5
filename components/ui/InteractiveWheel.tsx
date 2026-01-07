@@ -64,9 +64,9 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
       case 'glossy':
         return 'grayscale(0%) contrast(130%) brightness(115%) saturate(0%)'; // High contrast, bright, no color
       case 'chrome':
-        return 'grayscale(100%) contrast(150%) brightness(130%) drop-shadow(0 0 5px rgba(255,255,255,0.3))'; // Shiny metal
+        return 'grayscale(100%) contrast(160%) brightness(125%) drop-shadow(0 0 15px rgba(255,255,255,0.4))'; // Shiny metal, high contrast
       case 'raw-carbon':
-         return 'grayscale(100%) contrast(130%) brightness(85%) sepia(10%)'; // Darker, raw
+         return 'grayscale(100%) contrast(135%) brightness(80%) sepia(5%)'; // Darker, raw, high texture
       case 'red':
         return 'grayscale(0%) sepia(100%) hue-rotate(320deg) saturate(300%) contrast(120%) brightness(70%)'; // Dark Red Tint
       case 'matte':
@@ -108,15 +108,31 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
                 style={{ filter: getFilterStyle() }}
             />
             
-            {/* Red Finish Overlay (Mix Blend) - Adds deep red texture to shadows */}
+            {/* Red Finish Overlay (Mix Blend) */}
             <div 
               className={`absolute inset-0 rounded-full bg-red-900 mix-blend-overlay transition-opacity duration-500 pointer-events-none ${finish === 'red' && (isHovering || activePoint) ? 'opacity-80' : 'opacity-0'}`}
             ></div>
 
-            {/* Glossy/Chrome Finish Reflection - Adds sharp glare */}
+            {/* Glossy Finish Reflection (Soft) */}
              <div 
-              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent pointer-events-none mix-blend-soft-light transition-opacity duration-500 ${(finish === 'glossy' || finish === 'chrome') && (isHovering || activePoint) ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent pointer-events-none mix-blend-soft-light transition-opacity duration-500 ${(finish === 'glossy') && (isHovering || activePoint) ? 'opacity-100' : 'opacity-0'}`}
               style={{ transform: `translate(${rotation.y * 2}px, ${-rotation.x * 2}px)` }}
+            ></div>
+
+            {/* Chrome Finish Reflection (Sharp & Hard) */}
+            <div 
+              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/70 to-transparent pointer-events-none mix-blend-color-dodge transition-opacity duration-500 ${(finish === 'chrome') && (isHovering || activePoint) ? 'opacity-100' : 'opacity-0'}`}
+              style={{ transform: `translate(${rotation.y * 3}px, ${-rotation.x * 3}px)` }} // Faster movement for "metallic" feel
+            ></div>
+
+            {/* Raw Carbon Texture Overlay */}
+            <div 
+              className={`absolute inset-0 rounded-full pointer-events-none transition-opacity duration-500 ${finish === 'raw-carbon' && (isHovering || activePoint) ? 'opacity-50' : 'opacity-0'}`}
+              style={{ 
+                  backgroundImage: 'radial-gradient(circle at 50% 50%, transparent 50%, #000 100%), repeating-linear-gradient(45deg, rgba(0,0,0,0.5) 0, rgba(0,0,0,0.5) 2px, transparent 2px, transparent 4px)',
+                  backgroundSize: '100% 100%, 6px 6px',
+                  mixBlendMode: 'overlay'
+              }}
             ></div>
             
             {/* Standard Dynamic Glare */}
