@@ -14,7 +14,7 @@ export const PRODUCTS: WheelProduct[] = [
     depth: "45mm",
     price: "1 830 €",
     image: WHEEL_IMG,
-    features: ["Profil Ondulé", "Moyeux Aivee Edition One", "Rayons Sapim Cx Ray" "1280g / paire"]
+    features: ["Profil Ondulé", "Moyeux Aivee Edition One", "Rayons Sapim Cx Ray", "1280g / paire"]
   },
   {
     id: "vdz-8060-wave",
@@ -28,7 +28,7 @@ export const PRODUCTS: WheelProduct[] = [
     id: "vdz-35-climb",
     name: "Feather 3532",
     depth: "35mm",
-    price: "à partir de 2300 € €",
+    price: "à partir de 2300 €",
     image: WHEEL_IMG,
     features: ["Poids Plume à partir de 1100g", "Réactivité Instantanée", "Garantie à Vie"]
   }
