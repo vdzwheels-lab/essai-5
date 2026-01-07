@@ -88,11 +88,14 @@ export const Hero: React.FC = () => {
                 className="relative bg-zinc-900 overflow-hidden h-[400px] md:h-[500px]"
                 style={{ clipPath: 'polygon(20% 0%, 100% 0, 100% 80%, 80% 100%, 0 100%, 0% 20%)' }}
             >
-                {/* The Photo */}
-                <img 
-                  src="https://images.unsplash.com/photo-1576435728678-35d016018997?q=80&w=1000&auto=format&fit=crop" 
-                  alt="VDZ Wheel Close-up" 
+                {/* The Video */}
+                <video 
+                  src="https://vdzwheels.com/vdz-wheels-test/wp-content/uploads/2026/01/WhatsApp-Video-2025-08-22-a-04.35.43_5d3fdc79.mp4" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-90 contrast-125 group-hover:brightness-100"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
                 
                 {/* Tech Overlays inside the image */}
@@ -119,7 +122,7 @@ export const Hero: React.FC = () => {
                 className="absolute bottom-8 right-8 bg-black/80 backdrop-blur border border-red-900/50 px-3 py-1 text-[10px] font-orbitron text-white tracking-widest z-30"
                 style={{ transform: 'translateZ(30px)' }}
             >
-                IMG_REF: AERO_01
+                VIDEO_REF: ACTION_01
             </div>
           </div>
           

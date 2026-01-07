@@ -249,6 +249,14 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
                 <div className={`w-4 h-4 border rounded-full flex items-center justify-center transition-colors duration-300 ${activePoint === 'hub' ? 'bg-green-900 border-green-400 text-green-400' : (finish === 'red' ? 'bg-red-900 border-red-500 text-white' : 'bg-black border-white text-white')}`}>
                     {activePoint === 'hub' ? <Activity className="w-2 h-2" /> : <Plus className="w-3 h-3" />}
                 </div>
+
+                {/* Pulsing Dot Indicator */}
+                {activePoint === 'hub' && (
+                  <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                )}
                 
                 {/* HUD Popup */}
                 <div className={`absolute left-6 top-6 w-52 bg-black/90 backdrop-blur-md border p-3 rounded-tr-lg rounded-bl-lg transform transition-all duration-300 origin-top-left overflow-hidden ${isHovering || activePoint === 'hub' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'} ${activePoint === 'hub' ? 'border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]' : 'border-red-900/50'}`}>
@@ -293,6 +301,14 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
                 <div className={`w-3 h-3 rounded-full absolute inset-0 ${activePoint === 'rim' ? 'bg-cyan-400/50 animate-ping' : 'bg-white animate-pulse'}`}></div>
                 <div className={`w-3 h-3 border rounded-full transition-colors ${activePoint === 'rim' ? 'bg-cyan-900 border-cyan-400' : 'bg-zinc-800 border-white'}`}></div>
                 
+                {/* Pulsing Dot Indicator */}
+                {activePoint === 'rim' && (
+                  <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                  </span>
+                )}
+
                 {/* HUD Popup */}
                 <div className={`absolute right-6 top-0 w-48 bg-black/90 backdrop-blur-md border p-3 transform transition-all duration-300 origin-top-right text-right overflow-hidden ${isHovering || activePoint === 'rim' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'} ${activePoint === 'rim' ? 'border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]' : 'border-zinc-700'}`}>
                     
