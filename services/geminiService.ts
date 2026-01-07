@@ -1,6 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 import { AI_SYSTEM_INSTRUCTION } from '../constants';
 
+// Déclaration pour éviter l'erreur TypeScript "Cannot find name 'process'"
+declare const process: {
+  env: {
+    API_KEY?: string;
+    [key: string]: string | undefined;
+  }
+};
+
 // Initialize the client. In a real scenario, ensure process.env.API_KEY is available.
 // Since we cannot prompt for it in code, we assume it exists. 
 // For this demo, we will use a safe fallback or assume the user injects it.
@@ -12,7 +20,7 @@ export const sendMessageToGemini = async (history: { role: string, parts: { text
       return "SYSTEM: API Key Missing. Please configure the environment.";
     }
 
-    const model = 'gemini-3-flash-preview';
+    const model = 'gemini-2.5-flash-preview';
     
     // Convert history format if needed, or maintain local state to pass context
     // Here we just generate content with the new message for simplicity in a stateless call,
@@ -26,7 +34,8 @@ export const sendMessageToGemini = async (history: { role: string, parts: { text
         { role: 'user', parts: [{ text: newMessage }] }
       ],
       config: {
-        thinkingConfig: { thinkingBudget: 0 }, // Disable thinking for faster chat response
+        // thinkingConfig not supported on flash-preview standard yet, using standard params
+        temperature: 0.7
       }
     });
 
