@@ -9,19 +9,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      /* Custom Carbon Fiber Pattern */
+      /* Hide default cursor globally on non-touch devices to use custom one */
+      @media (min-width: 768px) {
+        body, a, button, input, textarea {
+          cursor: none !important;
+        }
+      }
+
+      /* --- NEW REALISTIC CARBON FIBER --- */
       .bg-carbon {
-        background-color: #111;
-        background-image:
-          linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
-          linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000);
-        background-size: 20px 20px;
-        background-position: 0 0, 10px 10px;
+        background-color: #080808;
+        /* Twill Weave Pattern imitation */
+        background-image: 
+          linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111),
+          linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111),
+          /* Noise texture for realism */
+          url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        background-position: 0 0, 8px 8px, 0 0;
+        background-size: 16px 16px, 16px 16px, 200px 200px;
       }
       
+      /* Vignette & Ambient Light Overlay */
       .bg-carbon-overlay {
-        background: radial-gradient(circle at 0% 50%, rgba(139, 0, 0, 0.15), transparent 60%),
-                    radial-gradient(circle at 100% 50%, rgba(20, 20, 20, 0.8), transparent 50%);
+        background: radial-gradient(circle at 50% 0%, rgba(50, 50, 50, 0.15), transparent 70%),
+                    radial-gradient(circle at 0% 100%, rgba(139, 0, 0, 0.1), transparent 50%),
+                    linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.4));
       }
 
       .font-orbitron { font-family: 'Orbitron', sans-serif; }
@@ -95,9 +107,59 @@
         80% { transform: translate(2px, -2px); }
         100% { transform: translate(0); }
       }
+      
+      /* Advanced Skew Glitch */
+      @keyframes glitch-skew {
+        0% { transform: translate(0) skew(0deg); }
+        20% { transform: translate(-3px, 1px) skew(5deg); }
+        40% { transform: translate(-1px, -2px) skew(-5deg); }
+        60% { transform: translate(3px, 1px) skew(2deg); }
+        80% { transform: translate(1px, -1px) skew(-5deg); }
+        100% { transform: translate(0) skew(0deg); }
+      }
+
       .hover-glitch:hover {
         animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
       }
+
+      /* Tech Shimmer */
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      /* Scanline vertical movement */
+      @keyframes scan {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 0% 100%; }
+      }
+
+      /* --- NEW SHOOTING STAR TRAJECTORIES --- */
+      
+      /* Trajectory 1: Diagonal Classic (Top Right -> Bottom Left) */
+      @keyframes shoot-diag {
+        0% { transform: translate(0, 0) rotate(215deg) scale(0); opacity: 0; }
+        5% { transform: translate(-20px, 20px) rotate(215deg) scale(1); opacity: 0.8; }
+        100% { transform: translate(-400px, 400px) rotate(215deg) scale(1); opacity: 0; }
+      }
+      
+      /* Trajectory 2: Flat (Left -> Right) */
+      @keyframes shoot-flat {
+        0% { transform: translate(0, 0) rotate(10deg) scale(0); opacity: 0; }
+        5% { transform: translate(30px, 5px) rotate(10deg) scale(1); opacity: 0.7; }
+        100% { transform: translate(600px, 100px) rotate(10deg) scale(1); opacity: 0; }
+      }
+      
+      /* Trajectory 3: Steep (Top -> Bottom) */
+      @keyframes shoot-steep {
+        0% { transform: translate(0, 0) rotate(170deg) scale(0); opacity: 0; }
+        5% { transform: translate(5px, 40px) rotate(170deg) scale(1); opacity: 0.8; }
+        100% { transform: translate(50px, 500px) rotate(170deg) scale(1); opacity: 0; }
+      }
+
+      .animate-shoot-diag { animation: shoot-diag 4s linear infinite; }
+      .animate-shoot-flat { animation: shoot-flat 6s linear infinite; }
+      .animate-shoot-steep { animation: shoot-steep 5s linear infinite; }
 
       /* Scrollbar */
       ::-webkit-scrollbar {
@@ -110,7 +172,7 @@
         background: #8b0000; 
       }
     </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "vite": "https://esm.sh/vite@^7.3.1",
@@ -119,7 +181,11 @@
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
+    "react": "https://esm.sh/react@^19.2.3",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
+    "three": "https://esm.sh/three@^0.182.0",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.5.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0"
   }
 }
 </script>

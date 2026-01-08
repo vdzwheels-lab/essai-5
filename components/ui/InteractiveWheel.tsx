@@ -208,7 +208,7 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
           </button>
         </div>
 
-        {/* Holographic Name with Glitch Effect */}
+        {/* Holographic Name with Enhanced Glitch Effect */}
         <div 
             className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-full text-center z-30 pointer-events-none transition-all duration-300"
             style={{ 
@@ -216,34 +216,49 @@ export const InteractiveWheel: React.FC<InteractiveWheelProps> = ({ image, name,
                 opacity: isHovering || activePoint ? 1 : 0,
             }}
         >
-            <div className="relative inline-block">
+            <div className="relative inline-block w-full max-w-full">
+                {/* Glitch Layer 1 - Red Shift (DOMINANT) */}
                 <h3 
-                    className={`font-orbitron text-4xl font-black uppercase tracking-widest absolute inset-0 ${finish === 'red' ? 'text-red-950' : 'text-gray-800'}`}
+                    className="font-orbitron text-4xl font-black uppercase tracking-widest absolute inset-0 text-red-600 opacity-0 z-0"
                     style={{
-                        clipPath: isHovering ? 'polygon(0 0, 100% 0, 100% 33%, 0 33%)' : 'none',
-                        transform: isHovering ? 'translate(-5px, -2px)' : 'none',
-                        opacity: isHovering ? 0.8 : 0,
+                        opacity: isHovering ? 1 : 0, // Full opacity for Red
+                        transform: isHovering ? 'translate(4px, -3px)' : 'none',
+                        clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 100%)', // Full visibility
+                        animation: isHovering ? 'glitch-skew 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite' : 'none',
+                        textShadow: '0 0 10px rgba(220, 38, 38, 0.8)', // Glow
+                        mixBlendMode: 'screen'
                     }}
                 >
                     {name}
                 </h3>
 
+                {/* Glitch Layer 2 - Cyan Shift (SUBTLE) */}
                 <h3 
-                    className={`font-orbitron text-4xl font-black uppercase tracking-widest absolute inset-0 mix-blend-color-dodge ${finish === 'red' ? 'text-red-600' : 'text-blue-200'}`}
+                    className="font-orbitron text-4xl font-black uppercase tracking-widest absolute inset-0 text-cyan-400 opacity-0 z-0"
                     style={{
-                        clipPath: isHovering ? 'polygon(0 67%, 100% 67%, 100% 100%, 0 100%)' : 'none',
-                        transform: isHovering ? 'translate(5px, 2px)' : 'none',
-                        animation: isHovering ? 'glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite' : 'none',
-                        opacity: isHovering ? 1 : 0,
+                        opacity: isHovering ? 0.3 : 0, // Low opacity for Cyan
+                        transform: isHovering ? 'translate(-2px, 1px)' : 'none',
+                        clipPath: 'polygon(0 60%, 100% 60%, 100% 90%, 0 90%)',
+                        animation: isHovering ? 'glitch-skew 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite' : 'none',
                     }}
                 >
                     {name}
                 </h3>
 
+                {/* Main Text - CHROME FINISH */}
                 <h3 
-                    className={`font-orbitron text-4xl font-black uppercase text-transparent bg-clip-text tracking-widest relative z-10 ${finish === 'red' ? 'bg-gradient-to-b from-red-500 via-red-900 to-black' : 'bg-gradient-to-b from-white via-gray-400 to-black'}`}
+                    className={`font-orbitron text-4xl font-black uppercase text-transparent bg-clip-text tracking-widest relative z-10 ${
+                        finish === 'red' 
+                        ? 'bg-gradient-to-b from-red-500 via-red-900 to-black' 
+                        : 'bg-gradient-to-b from-white via-gray-300 to-zinc-600' // Chrome Gradient
+                    }`}
                     style={{
-                        textShadow: isHovering ? (finish === 'red' ? '0 0 20px rgba(139,0,0,0.8)' : '0 0 20px rgba(255,255,255,0.4)') : 'none',
+                         // Red shadow dominant, subtle cyan/white highlight
+                         textShadow: isHovering ? 
+                            (finish === 'red' 
+                                ? '4px 0 0px rgba(255,0,0,0.8), -2px 0 0px rgba(100,0,0,0.5)' 
+                                : '4px 0 0px rgba(220, 38, 38, 0.9), -2px 0 0px rgba(0,255,255,0.1)') 
+                            : '0px 2px 10px rgba(0,0,0,0.5)',
                     }}
                 >
                     {name}
